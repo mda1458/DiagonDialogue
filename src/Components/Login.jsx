@@ -6,7 +6,7 @@ import { auth } from "../firebase";
 import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
-const LoginPage = () => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const loginbyEmail = (e) => {
@@ -40,7 +40,7 @@ const LoginPage = () => {
         <div>
           <label
             htmlFor="email"
-            className="block mb-2 text-3xl font-medium text-gray-200"
+            className="block mb-2 text-2xl font-medium text-gray-200"
           >
             Your email
           </label>
@@ -57,7 +57,7 @@ const LoginPage = () => {
         <div>
           <label
             htmlFor="password"
-            className="block mb-2 text-3xl font-medium text-gray-200"
+            className="block mb-2 text-2xl font-medium text-gray-200"
           >
             Password
           </label>
@@ -91,4 +91,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;
