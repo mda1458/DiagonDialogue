@@ -17,9 +17,13 @@ export const AuthProvider = ({ children }) => {
         auth.onAuthStateChanged((user) => {
             setUser(user);
             setLoading(false);
-            // get user verification
-            if (user.multiFactor.user.emailVerified === false) {
-                navigate("/verify");
+            if (user) {
+                if (user.multiFactor.user.emailVerified === false) {
+                    navigate("/verify");
+                }
+                else {
+                    navigate("/chats");
+                }
             }
         });
     }

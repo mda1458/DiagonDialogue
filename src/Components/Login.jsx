@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 
+import { toast } from "react-toastify";
+
 import firebase from "firebase/compat/app";
 import { auth } from "../firebase";
 
@@ -13,9 +15,8 @@ const Login = () => {
     const loginbyEmail = (e) => {
         e.preventDefault();
         auth.signInWithEmailAndPassword(email, password)
-            .then((userCredential) => {
-                var user = userCredential.user;
-                console.log(user);
+            .then(() => {
+                toast.success("Welcome Back");
             }
             )
             .catch((error) => {

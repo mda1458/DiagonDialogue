@@ -1,9 +1,71 @@
-import React from 'react'
+import { useAuth } from "../contexts/AuthContext";
 
 const Navbar = () => {
+    const { user } = useAuth();
   return (
-    <div className="flex items-center justify-center h-[4.5rem] mt-4">
-      <h1 className="text-6xl text-gray-200">DiagonDialogue</h1>
+    <div
+      className={`flex items-center h-[4.5rem] m-4 ${
+        user ? "justify-between" : "justify-center"
+      }`}
+    >
+      <h1 className={`${user ? "text-3xl" : "text-6xl"} text-gray-200`}>
+        DiagonDialogue
+      </h1>
+    {user && (
+        <>
+    <button type="button" className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
+    <span className="sr-only">Open user menu</span>
+    <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo"/>
+    </button>
+      <div
+        className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
+        id="user-dropdown"
+      >
+        <div className="px-4 py-3">
+          <span className="block text-sm text-gray-900 dark:text-white">
+            Bonnie Green
+          </span>
+          <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
+            name@flowbite.com
+          </span>
+        </div>
+        <ul className="py-2" aria-labelledby="user-menu-button">
+          <li>
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+            >
+              Dashboard
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+            >
+              Settings
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+            >
+              Earnings
+            </a>
+          </li>
+          <li>
+            <a
+              href="#"
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
+            >
+              Sign out
+            </a>
+          </li>
+        </ul>
+      </div>
+        </>
+        )}
     </div>
   );
 }

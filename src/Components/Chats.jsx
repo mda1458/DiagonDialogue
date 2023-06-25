@@ -3,6 +3,7 @@ import { useEffect } from "react"
 import { useAuth } from "../contexts/AuthContext"
 import { auth } from "../firebase"
 import { useNavigate } from "react-router-dom"
+import { toast } from "react-toastify"
 
 const Chats = () => {
   const navigate = useNavigate();
@@ -12,8 +13,15 @@ const Chats = () => {
   }, [user])
 
   const handleLogout = () => {
-    auth.signOut();
-    navigate("/");
+    auth.signOut()
+    .then(() => {
+      toast.success("Logged out successfully")
+      navigate("/")
+    })
+    .catch((err) => {
+      toast.error(err.message)
+    }
+    )
   }
 
   return (
