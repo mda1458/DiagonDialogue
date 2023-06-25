@@ -15,10 +15,11 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         auth.onAuthStateChanged((user) => {
+            console.log(user);
             setUser(user);
             setLoading(false);
             if (user) {
-                if (user.multiFactor.user.emailVerified === false) {
+                if (user.emailVerified === false) {
                     navigate("/verify");
                 }
                 else {

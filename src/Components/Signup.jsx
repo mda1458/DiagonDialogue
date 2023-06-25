@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 
 import { toast } from "react-toastify";
 
-import firebase from "firebase/compat/app";
 import { auth } from "../firebase";
 
 const Signup = () => {

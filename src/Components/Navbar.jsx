@@ -1,7 +1,29 @@
+import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 
+import { auth } from "../firebase";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+
+import avatar from "../assets/avatar.png";
+
 const Navbar = () => {
+    const navigate = useNavigate();
+    const [showMenu, setShowMenu] = useState(false);
     const { user } = useAuth();
+
+    const handleLogout = () => {
+      setShowMenu(false)
+      auth.signOut()
+      .then(() => {
+        toast.success("Logged out successfully")
+        navigate("/")
+      })
+      .catch((err) => {
+        toast.error(err.message)
+      }
+      )
+  }
   return (
     <div
       className={`flex items-center h-[4.5rem] m-4 ${
@@ -11,61 +33,31 @@ const Navbar = () => {
       <h1 className={`${user ? "text-3xl" : "text-6xl"} text-gray-200`}>
         DiagonDialogue
       </h1>
-    {user && (
+      {user && (
         <>
-    <button type="button" className="flex mr-3 text-sm bg-gray-800 rounded-full md:mr-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
-    <span className="sr-only">Open user menu</span>
-    <img className="w-8 h-8 rounded-full" src="/docs/images/people/profile-picture-3.jpg" alt="user photo"/>
-    </button>
-      <div
-        className="z-50 hidden my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow"
-        id="user-dropdown"
-      >
-        <div className="px-4 py-3">
-          <span className="block text-sm text-gray-900 dark:text-white">
-            Bonnie Green
-          </span>
-          <span className="block text-sm  text-gray-500 truncate dark:text-gray-400">
-            name@flowbite.com
-          </span>
-        </div>
-        <ul className="py-2" aria-labelledby="user-menu-button">
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >
-              Dashboard
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >
-              Settings
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >
-              Earnings
-            </a>
-          </li>
-          <li>
-            <a
-              href="#"
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
-            >
-              Sign out
-            </a>
-          </li>
-        </ul>
-      </div>
+          <div className="relative">
+            <img
+              className="rounded-full w-12 h-12 cursor-pointer"
+              src={user.photoURL || avatar}
+              alt="avatar"
+              onClick={() => setShowMenu(!showMenu)}
+            />
+            {showMenu && (
+              <div className="absolute top-12 right-0 w-48 rounded-md bg-[#ffffffe0] shadow-lg py-2">
+                <p className="block px-4 py-2 text-xl">
+                  {user.displayName}
+                </p>
+                <button className="block px-4 py-2 text-xl hover:bg-[#ffffff38] w-full">
+                  Profile
+                </button>
+                <button onClick={handleLogout} className="block px-4 py-2 text-xl hover:bg-[#ffffff38] w-full">
+                  Logout
+                </button>
+              </div>
+            )}
+          </div>
         </>
-        )}
+      )}
     </div>
   );
 }
