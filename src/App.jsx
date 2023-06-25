@@ -9,6 +9,7 @@ import Chats from "./components/Chats";
 import { AuthProvider } from "./contexts/AuthContext"
 import Signup from "./components/Signup";
 import Navbar from "./components/Navbar";
+import Verify from "./components/Verify";
 
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
+          <Route path="/verify" element={<Verify />} />
           <Route path="/chats" element={<Chats />} />
         </Routes>
         <ToastContainer

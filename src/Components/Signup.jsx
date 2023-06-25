@@ -7,7 +7,6 @@ import firebase from "firebase/compat/app";
 import { auth } from "../firebase";
 
 const Signup = () => {
-  const [success, setSuccess] = useState(false);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -25,9 +24,7 @@ const Signup = () => {
             user.updateProfile({
                 displayName: name,
             }).then(() => {
-                setSuccess(true);
-                const text = `Welcome to DiagonDialogue, ${name}`;
-                toast.success(text);
+                toast.success("Account Created");
             }).catch((error) => {
                 toast.error(error.message);
             });
@@ -41,22 +38,6 @@ const Signup = () => {
   };
   return (
     <div className="flex flex-col items-center justify-center h-[cal(100vh-5rem)]">
-      {success ? (
-        <div className="flex flex-col items-center justify-center gap-4">
-            <h1 className="text-6xl text-gray-200">Welcome to DiagonDialogue! {name}</h1>
-            <p className="text-2xl text-gray-200">
-                DiagonDialogue is a place where you can talk to your friends and
-                family without any fear of being tracked by the Ministry of Magic.
-                We use the latest magic to keep your conversations safe and secure 😉.
-            </p>
-            <p className="text-2xl text-gray-200">
-                {"Don't"} forget to check out your Email box! 
-                You will find a PortKey to activate your account.
-                If you have already done that, then you are good to go!
-            </p>
-            <Link to="/chats" className="text-4xl text-gray-200 hover:text-red-900">Go to Chats</Link>
-        </div>
-        ) : (
         <form
         className="flex flex-col gap-4 md:w-[29rem]"
         onSubmit={register}
@@ -145,8 +126,6 @@ const Signup = () => {
             </Link>
             </p>
         </form>
-        )
-      }
     </div>
   );
 };
