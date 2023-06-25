@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 import firebase from "firebase/compat/app";
 import { auth } from "../firebase";
@@ -11,22 +12,34 @@ const Login = () => {
     const [password, setPassword] = useState("");
     const loginbyEmail = (e) => {
         e.preventDefault();
-        console.log (email, password);
+        auth.signInWithEmailAndPassword(email, password)
+            .then((userCredential) => {
+                var user = userCredential.user;
+                console.log(user);
+            }
+            )
+            .catch((error) => {
+                    console.log(error.message);
+                }
+            );
     }
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-[#0E0D16] via-gray-600 to-[#651C32]">
-      <h1 className="text-6xl mb-8 text-gray-200">DiagonDialogue</h1>
+    <div className="flex flex-col items-center justify-center h-[calc(100vh-7rem)]">
       <div className="flex flex-col space-y-4 md:flex-row md:space-x-6 md:space-y-0">
-        <button 
-            className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md bg-white text-2xl text-gray-700 hover:bg-gray-300"
-            onClick={() => auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())}
+        <button
+          className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md bg-white text-2xl text-gray-700 hover:bg-gray-300"
+          onClick={() =>
+            auth.signInWithRedirect(new firebase.auth.GoogleAuthProvider())
+          }
         >
           <FcGoogle className="mr-2" />
           Alhomora with Google
         </button>
-        <button 
-            className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md bg-white text-2xl text-gray-700 hover:bg-gray-300"
-            onClick={() => auth.signInWithRedirect(new firebase.auth.FacebookAuthProvider())}
+        <button
+          className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md bg-white text-2xl text-gray-700 hover:bg-gray-300"
+          onClick={() =>
+            auth.signInWithRedirect(new firebase.auth.FacebookAuthProvider())
+          }
         >
           <FaFacebook className="mr-2 text-blue-800" />
           Alhomora with Facebook
@@ -34,7 +47,7 @@ const Login = () => {
       </div>
       <div className="text-3xl mt-4 sm:mt-8 text-gray-200"> - OR - </div>
       <form
-        className="mt-4 sm:mt-8 flex flex-col gap-4"
+        className="mt-4 sm:mt-8 flex flex-col gap-4 md:w-[29rem]"
         onSubmit={loginbyEmail}
       >
         <div>
@@ -59,7 +72,7 @@ const Login = () => {
             htmlFor="password"
             className="block mb-2 text-2xl font-medium text-gray-200"
           >
-            Password
+            PortKey
           </label>
           <input
             type="password"
@@ -73,18 +86,18 @@ const Login = () => {
         </div>
         <button
           type="submit"
-          className="w-full text-white bg-primary-600 hover:bg-[#651C32] font-medium rounded-lg text-3xl px-5 py-2.5 text-center"
+          className="w-full text-white bg-gradient-to-r from-[#651C32] via-gray-600 to-[#0E0D16] font-medium rounded-lg text-3xl px-5 py-2.5 text-center"
         >
           Alhomora
         </button>
-        <p className="text-3xl font-light text-gray-500 dark:text-gray-400">
+        <p className="text-3xl text-center font-light text-gray-300">
           Don’t have an account yet?{" "}
-          <a
-            href="#"
+          <Link
+            to="/signup"
             className="font-medium text-gray-200 hover:underline hover:text-[#651C32] "
           >
             Join
-          </a>
+          </Link>
         </p>
       </form>
     </div>

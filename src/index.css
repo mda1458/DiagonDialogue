@@ -7,9 +7,13 @@
     src: url("../fonts/HARRYP__.TTF") format("truetype");
 }
 
-* {
+html, body {
     font-family: "Harry Potter";
-    
     overflow-x: hidden;
-    
+    background: linear-gradient(90deg, #0E0D16 30%, #758599 50%, #651C32 80%);
+}
+
+.fontHP {
+    font-family: "Harry Potter";
+    font-size: 1.5rem;
 }
