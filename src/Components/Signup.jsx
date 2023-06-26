@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import avatar from "../assets/avatar.webp";
 
 import { toast } from "react-toastify";
 
@@ -20,13 +21,19 @@ const Signup = () => {
     auth.createUserWithEmailAndPassword(email, password)
         .then((userCredential) => {
             var user = userCredential.user;
+            auth.currentUser.sendEmailVerification();
             user.updateProfile({
                 displayName: name,
-            }).then(() => {
-                toast.success("Account Created");
-            }).catch((error) => {
-                toast.error(error.message);
-            });
+                photoURL: avatar,
+            })
+            .then(() => {
+                toast.success("Registered Successfully");
+            }
+            )
+            .catch((error) => {
+                    toast.error(error.message);
+                }
+            );
         }
         )
         .catch((error) => {
@@ -36,7 +43,7 @@ const Signup = () => {
 
   };
   return (
-    <div className="flex flex-col items-center justify-center h-[cal(100vh-5rem)]">
+    <div className="flex items-center justify-center h-[cal(100vh-5rem)]">
         <form
         className="flex flex-col gap-4 md:w-[29rem]"
         onSubmit={register}

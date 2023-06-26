@@ -5,7 +5,7 @@ import { auth } from "../firebase";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
-import avatar from "../assets/avatar.png";
+import avatar from "../assets/avatar.webp";
 
 const Navbar = () => {
     const navigate = useNavigate();
@@ -30,12 +30,12 @@ const Navbar = () => {
         user ? "justify-between" : "justify-center"
       }`}
     >
-      <h1 className={`${user ? "text-3xl" : "text-6xl"} text-gray-200`}>
+      <h1 className={`${user ? "text-5xl" : "text-6xl"} text-gray-200`}>
         DiagonDialogue
       </h1>
       {user && (
         <>
-          <div className="relative">
+          <div className="">
             <img
               className="rounded-full w-12 h-12 cursor-pointer"
               src={user.photoURL || avatar}
@@ -43,7 +43,7 @@ const Navbar = () => {
               onClick={() => setShowMenu(!showMenu)}
             />
             {showMenu && (
-              <div className="absolute top-12 right-0 w-48 rounded-md bg-[#ffffffe0] shadow-lg py-2">
+              <div className="absolute top-20 right-5 w-48 rounded-md bg-[#ffffffe0] shadow-lg py-2">
                 <p className="block px-4 py-2 text-xl">
                   {user.displayName}
                 </p>

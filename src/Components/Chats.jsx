@@ -1,43 +1,73 @@
-import { useEffect } from "react"
+import { useState, useRef, useEffect } from "react"
+import axios from "axios"
+import { useNavigate } from "react-router-dom";
+
+import { ChatEngine } from "react-chat-engine"
+import avatar from "../assets/avatar.webp"
 
 import { useAuth } from "../contexts/AuthContext"
-import { auth } from "../firebase"
-import { useNavigate } from "react-router-dom"
-import { toast } from "react-toastify"
 
 const Chats = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
+  const [loading, setLoading] = useState(true)
   const { user } = useAuth()
-  useEffect(() => {
-    console.log(user)
-  }, [user])
 
-  const handleLogout = () => {
-    auth.signOut()
-    .then(() => {
-      toast.success("Logged out successfully")
-      navigate("/")
-    })
-    .catch((err) => {
-      toast.error(err.message)
-    }
-    )
+  const getFile = async (url) => {
+    const response = await fetch(url)
+    const data = await response.blob()
+
+    return new File([data], "userPhoto.jpg", { type: "image/jpeg" })
   }
 
+  useEffect(() => {
+    if (!user) {
+      navigate("/")
+      return
+    }
+    axios.get("https://api.chatengine.io/users/me/", {
+      headers: {
+        "project-id": "c8a2c04a-f443-483f-bf9f-9354863bbb0d",
+        "user-name": user.email,
+        "user-secret": user.uid
+      }
+    })
+    .then(() => {
+      console.log("User exists")
+      setLoading(false)
+    })
+    .catch(() => {
+      let formdata = new FormData()
+      formdata.append("email", user.email)
+      formdata.append("username", user.email)
+      formdata.append("secret", user.uid)
+      
+      getFile(user.photoURL)
+      .then((avatar) => {
+        formdata.append("avatar", avatar, avatar.name)
+
+        axios
+          .post("https://api.chatengine.io/users/", formdata, {
+            headers: { "private-key": "fa99cbca-734f-4406-a4cd-4a65a7f76145" },
+          })
+          .then(() => setLoading(false))
+          .catch((err) => console.log(err));
+      })
+    })
+  }, [user])
   return (
-    <div className="flex flex-col items-center justify-center h-screen bg-gradient-to-r from-[#0E0D16] via-gray-600 to-[#651C32]">
-      <h1 className="text-6xl mb-8 text-gray-200">DiagonDialogue</h1>
-      <div className="flex flex-col space-y-4 md:flex-row md:space-x-6 md:space-y-0">
-        <button
-          className="flex items-center justify-center px-4 py-2 border border-gray-300 rounded-md bg-white text-2xl text-gray-700 hover:bg-gray-300"
-          onClick={handleLogout}
-        >
-          Logout
-        </button>
-      </div>
-    </div>
-    
-  )
+    <ChatEngine
+      style={{ position: "absolute", top: 0 }}
+      height="calc(100vh - 4.5rem)"
+      projectID="c8a2c04a-f443-483f-bf9f-9354863bbb0d"
+      userName={user.email}
+      userSecret={user.uid}
+      onNewMessage={() =>
+        new Audio(
+          "https://chat-engine-assets.s3.amazonaws.com/click.mp3"
+        ).play()
+      }
+    />
+  );
 }
 
 export default Chats
