@@ -24,21 +24,34 @@ const Chats = () => {
   }
 
   return (
-    <div className="pt-20">
+    <>
       {/* Chats */}
-      <main className="flex flex-col items-center justify-center w-full flex-1 lg:px-20 text-center">
+      <main className="flex flex-col items-center justify-center w-full flex-1 lg:px-20 text-center pt-20 pb-24">
         <div className="flex flex-col w-full h-full overflow-y-auto">
-          {messages && messages.map(msg => <ChatMessage key={msg.id} message={msg} />)}
+          {messages &&
+            messages.map((msg) => <ChatMessage key={msg.id} message={msg} />)}
           <div ref={dummy}></div>
         </div>
       </main>
       {/* Chat Input */}
-      <form className="flex items-center justify-center w-full h-24 px-4 py-2 border-t border-gray-200" onSubmit={sendMessage}>
-        <input className="flex-1 px-4 py-2 mr-4 text-xl border border-gray-300 rounded-md focus:outline-none" type="text" name="text" placeholder="Type your message here..." />
-        <button className="px-4 py-2 text-xl font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none" type='submit'>🕊️</button>
+      <form
+        className="flex items-center justify-center w-full h-24 px-4 py-2 fixed bottom-0 top-screen bg-white bg-opacity-10 shadow-lg backdrop-filter backdrop-blur-lg"
+        onSubmit={sendMessage}
+      >
+        <input
+          className="flex-1 px-4 py-2 mr-4 text-xl border border-gray-300 rounded-md focus:outline-none"
+          type="text"
+          name="text"
+          placeholder="Type your message here..."
+        />
+        <button
+          className="px-4 py-2 text-xl font-semibold text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none"
+          type="submit"
+        >
+          🕊️
+        </button>
       </form>
-
-    </div>
+    </>
   );
 }
 

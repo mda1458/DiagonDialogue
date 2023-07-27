@@ -43,7 +43,7 @@ const Signup = () => {
 
   };
   return (
-    <div className="flex items-center justify-center h-[cal(100vh-5rem)]">
+    <div className="flex items-center justify-center h-screen">
         <form
         className="flex flex-col gap-4 md:w-[29rem]"
         onSubmit={register}
