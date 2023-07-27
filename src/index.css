@@ -8,6 +8,8 @@
 }
 
 html, body {
+    margin: 0;
+    padding: 0;
     overflow-x: hidden;
     background: linear-gradient(120deg, #0E0D16 30%, #758599 90%);
     background-repeat: no-repeat;
