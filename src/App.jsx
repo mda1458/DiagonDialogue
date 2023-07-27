@@ -4,7 +4,7 @@ import { ToastContainer } from "react-toastify"
 import "react-toastify/dist/ReactToastify.css"
 
 import Login from "./components/Login";
-import Chats from "./components/Chats";
+import Chats from "./components/Chats/Chats";
 
 import { AuthProvider } from "./contexts/AuthContext"
 import Signup from "./components/Signup";
@@ -24,7 +24,6 @@ const App = () => {
           <Route path="/chats" element={<Chats />} />
         </Routes>
         <ToastContainer
-          toastClassName={"fontHP"}
           position="top-right"
           autoClose={3000}
           hideProgressBar={false}
