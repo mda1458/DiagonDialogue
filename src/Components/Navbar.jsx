@@ -26,9 +26,9 @@ const Navbar = () => {
   }
   return (
     <div
-      className={`flex items-center h-[4.5rem] m-4 ${
+      className={`flex fixed items-center h-[4.5rem] p-4 ${
         user ? "justify-between" : "justify-center"
-      }`}
+      } bg-white bg-opacity-10 shadow-lg backdrop-filter backdrop-blur-lg w-full`}
     >
       <h1 className={`${user ? "text-5xl" : "text-6xl"} text-gray-200`}>
         DiagonDialogue
