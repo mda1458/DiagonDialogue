@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { toast } from "react-toastify";
@@ -10,10 +9,11 @@ import { FcGoogle } from "react-icons/fc";
 import { FaFacebook } from "react-icons/fa";
 
 const Login = () => {
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
     const loginbyEmail = (e) => {
         e.preventDefault();
+        const email = e.target.usermail.value;
+        const password = e.target.userpass.value;
+
         auth.signInWithEmailAndPassword(email, password)
             .then(() => {
                 toast.success("Welcome Back");
@@ -53,16 +53,15 @@ const Login = () => {
       >
         <div>
           <label
-            htmlFor="email"
+            htmlFor="usermail"
             className="block mb-2 text-2xl font-medium text-gray-200"
           >
             Your email
           </label>
           <input
             type="email"
-            name="email"
-            id="email"
-            onChange={(e) => setEmail(e.target.value)}
+            name="usermail"
+            id="usermail"
             className="bg-gray-50 border border-gray-300 text-2xl sm:text-3xl rounded-lg block w-full p-2.5 text-black focus:outline-none"
             placeholder="name@company.com"
             required
@@ -70,16 +69,15 @@ const Login = () => {
         </div>
         <div>
           <label
-            htmlFor="password"
+            htmlFor="userpass"
             className="block mb-2 text-2xl font-medium text-gray-200"
           >
             PortKey
           </label>
           <input
             type="password"
-            name="password"
-            id="password"
-            onChange={(e) => setPassword(e.target.value)}
+            name="userpass"
+            id="userpass"
             placeholder="••••••••"
             className="bg-gray-50 border border-gray-300 text-2xl sm:text-3xl rounded-lg block w-full p-2.5 text-black focus:outline-none"
             required
